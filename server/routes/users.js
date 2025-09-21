@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../models/User');
+const { User } = require('../models/sqlite');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
@@ -7,8 +7,9 @@ const router = express.Router();
 // 사용자 프로필 조회
 router.get('/:id', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
-      .select('-password');
+    const user = await User.findByPk(req.params.id, {
+      attributes: { exclude: ['password'] }
+    });
 
     if (!user) {
       return res.status(404).json({ 

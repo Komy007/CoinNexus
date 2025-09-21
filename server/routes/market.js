@@ -1,6 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-const MarketData = require('../models/MarketData');
 
 const router = express.Router();
 
@@ -9,39 +8,23 @@ router.get('/data', async (req, res) => {
   try {
     const { symbol } = req.query;
     
-    try {
-      if (symbol) {
-        const data = await MarketData.findOne({ symbol })
-          .sort({ lastUpdated: -1 });
-        return res.json({ success: true, data });
-      }
-
-      // 모든 주요 코인 데이터 조회
-      const symbols = ['BTC', 'ETH', 'BNB', 'ADA', 'SOL', 'XRP', 'DOT', 'DOGE'];
-      const data = await MarketData.find({ 
-        symbol: { $in: symbols } 
-      }).sort({ lastUpdated: -1 });
-
-      res.json({ success: true, data });
-    } catch (dbError) {
-      // MongoDB 연결 오류 시 폴백 데이터
-      const fallbackData = [
-        { symbol: 'BTC', price: 115580, change: 0.48, volume: 10654, lastUpdated: new Date() },
-        { symbol: 'ETH', price: 2680, change: 1.23, volume: 125000, lastUpdated: new Date() },
-        { symbol: 'BNB', price: 420, change: 2.12, volume: 45000, lastUpdated: new Date() },
-        { symbol: 'ADA', price: 0.45, change: -3.23, volume: 200000, lastUpdated: new Date() },
-        { symbol: 'SOL', price: 95, change: 1.85, volume: 80000, lastUpdated: new Date() },
-        { symbol: 'XRP', price: 0.62, change: -1.45, volume: 150000, lastUpdated: new Date() },
-        { symbol: 'DOT', price: 18.5, change: -2.10, volume: 30000, lastUpdated: new Date() },
-        { symbol: 'DOGE', price: 0.08, change: 0.95, volume: 500000, lastUpdated: new Date() }
-      ];
-      
-      const filteredData = symbol ? 
-        fallbackData.filter(item => item.symbol === symbol) : 
-        fallbackData;
-      
-      res.json({ success: true, data: filteredData });
-    }
+    // 폴백 데이터 (MarketData 모델 제거됨)
+    const fallbackData = [
+      { symbol: 'BTC', price: 115580, change: 0.48, volume: 10654, lastUpdated: new Date() },
+      { symbol: 'ETH', price: 2680, change: 1.23, volume: 125000, lastUpdated: new Date() },
+      { symbol: 'BNB', price: 420, change: 2.12, volume: 45000, lastUpdated: new Date() },
+      { symbol: 'ADA', price: 0.45, change: -3.23, volume: 200000, lastUpdated: new Date() },
+      { symbol: 'SOL', price: 95, change: 1.85, volume: 80000, lastUpdated: new Date() },
+      { symbol: 'XRP', price: 0.62, change: -1.45, volume: 150000, lastUpdated: new Date() },
+      { symbol: 'DOT', price: 18.5, change: -2.10, volume: 30000, lastUpdated: new Date() },
+      { symbol: 'DOGE', price: 0.08, change: 0.95, volume: 500000, lastUpdated: new Date() }
+    ];
+    
+    const filteredData = symbol ? 
+      fallbackData.filter(item => item.symbol === symbol) : 
+      fallbackData;
+    
+    res.json({ success: true, data: filteredData });
   } catch (error) {
     console.error('시장 데이터 조회 오류:', error);
     res.status(500).json({ 
