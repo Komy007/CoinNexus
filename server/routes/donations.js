@@ -1,6 +1,5 @@
 const express = require('express');
-const Donation = require('../models/Donation');
-const User = require('../models/User');
+const { Donation, User } = require('../models/sqlite');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
@@ -15,14 +14,19 @@ router.get('/', async (req, res) => {
       query.currency = currency;
     }
 
-    const donations = await Donation.find(query)
-      .populate('donor', 'username profile.avatar')
-      .sort({ confirmedAt: -1 })
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .lean();
-
-    const total = await Donation.countDocuments(query);
+    const { rows: donations, count: total } = await Donation.findAndCountAll({
+      where: query,
+      order: [['confirmedAt', 'DESC']],
+      limit: parseInt(limit),
+      offset: (page - 1) * limit,
+      include: [
+        {
+          model: User,
+          as: 'donor',
+          attributes: ['username']
+        }
+      ]
+    });
 
     res.json({
       donations,
@@ -148,7 +152,7 @@ router.post('/', auth, async (req, res) => {
       });
     }
 
-    const donation = new Donation({
+    const donation = await Donation.create({
       donor: donorId,
       amount,
       currency,
@@ -160,12 +164,13 @@ router.post('/', auth, async (req, res) => {
       confirmedAt: new Date()
     });
 
-    await donation.save();
-
     // 사용자 총 기부액 업데이트
-    await User.findByIdAndUpdate(donorId, {
-      $inc: { totalDonations: amount }
-    });
+    const user = await User.findByPk(donorId);
+    if (user) {
+      await user.update({ 
+        totalDonations: (user.totalDonations || 0) + amount 
+      });
+    }
 
     res.status(201).json({
       message: '기부가 등록되었습니다.',
