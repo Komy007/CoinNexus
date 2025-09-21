@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -64,17 +63,8 @@ const initDatabase = async () => {
 // 데이터베이스 초기화 실행
 initDatabase();
 
-// MongoDB 연결 (선택사항 - 백업용)
-if (process.env.MONGODB_URI && process.env.MONGODB_URI !== '') {
-  mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('MongoDB 연결 성공 (백업용)'))
-  .catch(err => console.log('MongoDB 연결 실패 (선택사항):', err.message));
-} else {
-  console.log('MongoDB는 사용하지 않습니다. SQLite를 메인 데이터베이스로 사용합니다.');
-}
+// SQLite만 사용 - MongoDB 제거됨
+console.log('SQLite 데이터베이스를 메인 데이터베이스로 사용합니다.');
 
 // 라우트
 app.use('/api/auth', require('./routes/auth'));
