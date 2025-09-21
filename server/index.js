@@ -37,6 +37,16 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
+// 헬스체크 엔드포인트
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    message: 'CoinNexus API is running',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // SQLite 데이터베이스 초기화
 const initDatabase = async () => {
   console.log('🗄️ SQLite 데이터베이스 초기화 시작...');
