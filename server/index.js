@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
+const path = require('path');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const { testConnection, syncDatabase } = require('./config/database');
@@ -75,6 +76,14 @@ app.use('/api/market', require('./routes/market'));
 app.use('/api/news', require('./routes/news'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/watchlist', require('./routes/watchlist'));
+
+// 정적 파일 서빙 (React 앱)
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+// 모든 라우트를 React 앱으로 리다이렉트 (SPA)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 // Socket.IO 연결
 io.on('connection', (socket) => {
