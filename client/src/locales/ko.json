@@ -1,0 +1,197 @@
+{
+  "app": {
+    "title": "CoinNexus - 암호화폐 선물 거래 플랫폼"
+  },
+  "nav": {
+    "home": "홈",
+    "dashboard": "대시보드",
+    "community": "커뮤니티",
+    "donation": "기부",
+    "profile": "프로필",
+    "createPost": "글쓰기",
+    "login": "로그인",
+    "register": "회원가입",
+    "logout": "로그아웃"
+  },
+  "hero": {
+    "title": "암호화폐 선물 거래의<br />새로운 기준",
+    "description": "실시간 데이터, 전문가 인사이트, 그리고 활발한 커뮤니티가 만나는 곳. CoinNexus와 함께 더 스마트한 거래를 시작하세요.",
+    "cta": {
+      "primary": "대시보드 시작하기",
+      "secondary": "커뮤니티 둘러보기"
+    },
+    "chart": {
+      "title": "실시간 시장 현황",
+      "btc": "BTC/USDT",
+      "eth": "ETH/USDT"
+    }
+  },
+  "market": {
+    "title": "실시간 시장 개요",
+    "description": "최신 시장 데이터와 인사이트를 확인하세요",
+    "fearGreed": {
+      "title": "공포 & 탐욕 지수"
+    },
+    "funding": {
+      "title": "평균 펀딩비",
+      "description": "최고 펀딩비율 기준"
+    },
+    "volume": {
+      "title": "24시간 거래량",
+      "description": "최고 거래량 코인"
+    },
+    "topCoins": {
+      "title": "거래량 상위 코인"
+    }
+  },
+  "dashboard": {
+    "title": "대시보드 - CoinNexus",
+    "header": {
+      "title": "실시간 대시보드",
+      "description": "암호화폐 시장의 모든 것을 한눈에",
+      "lastUpdated": "마지막 업데이트:",
+      "refresh": "새로고침",
+      "export": "내보내기",
+      "settings": "설정"
+    },
+    "metrics": {
+      "btc가격": "BTC 가격",
+      "eth가격": "ETH 가격",
+      "공포탐욕지수": "공포 & 탐욕 지수",
+      "평균펀딩비": "평균 펀딩비",
+      "총미결제약정": "총 미결제 약정",
+      "시장총가치": "시장 총 가치",
+      "error": "시장 데이터를 불러오는 중 오류가 발생했습니다."
+    }
+  },
+  "community": {
+    "title": "커뮤니티 - CoinNexus",
+    "header": {
+      "title": "커뮤니티",
+      "description": "암호화폐 거래자들의 지식과 경험을 공유하는 공간입니다"
+    },
+    "category": {
+      "all": "전체",
+      "analysis": "분석",
+      "strategy": "전략",
+      "news": "뉴스",
+      "education": "교육",
+      "general": "일반"
+    },
+    "createPost": "글쓰기",
+    "readMore": "자세히 보기",
+    "empty": {
+      "title": "게시글이 없습니다",
+      "description": "아직 게시글이 없습니다. 첫 번째 게시글을 작성해보세요!"
+    },
+    "error": {
+      "title": "오류가 발생했습니다",
+      "description": "게시글을 불러오는 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+    }
+  },
+  "createPost": {
+    "title": "글쓰기 - CoinNexus",
+    "header": {
+      "title": "새 게시글 작성",
+      "description": "지식과 경험을 공유해주세요"
+    },
+    "form": {
+      "title": "제목",
+      "category": "카테고리",
+      "content": "내용",
+      "tags": "태그 (최대 5개)"
+    }
+  },
+  "donation": {
+    "title": "기부하기 - CoinNexus",
+    "header": {
+      "title": "기부하기",
+      "description": "CoinNexus 플랫폼의 지속적인 발전과 서비스 개선을 위해 기부해주세요"
+    },
+    "stats": {
+      "total": "총 기부 건수",
+      "amount": "총 기부 금액",
+      "currencies": "지원 통화"
+    },
+    "address": {
+      "label": "주소"
+    },
+    "empty": "아직 기부가 없습니다"
+  },
+  "login": {
+    "title": "로그인 - CoinNexus",
+    "header": {
+      "title": "로그인",
+      "description": "CoinNexus에 오신 것을 환영합니다"
+    },
+    "form": {
+      "email": "이메일",
+      "password": "비밀번호"
+    },
+    "divider": "또는",
+    "register": {
+      "text": "계정이 없으신가요? ",
+      "link": "회원가입"
+    }
+  },
+  "register": {
+    "title": "회원가입 - CoinNexus",
+    "header": {
+      "title": "회원가입",
+      "description": "CoinNexus와 함께 시작하세요"
+    },
+    "form": {
+      "email": "이메일",
+      "username": "사용자명",
+      "password": "비밀번호",
+      "confirmPassword": "비밀번호 확인"
+    },
+    "divider": "또는",
+    "login": {
+      "text": "이미 계정이 있으신가요? ",
+      "link": "로그인"
+    }
+  },
+  "auth": {
+    "loading": "인증 확인 중..."
+  },
+  "404": {
+    "title": "페이지를 찾을 수 없습니다",
+    "description": "요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.<br />URL을 확인하시거나 홈페이지로 돌아가시기 바랍니다.",
+    "action": {
+      "home": "홈으로 가기",
+      "dashboard": "대시보드"
+    }
+  },
+  "footer": {
+    "about": {
+      "title": "CoinNexus 소개",
+      "description": "암호화폐 선물 거래에 특화된 정보 및 커뮤니티 플랫폼입니다. 실시간 데이터, 교육 콘텐츠, 그리고 상호 교류의 장을 제공하여 신뢰할 수 있는 인사이트 허브가 되는 것을 목표로 합니다."
+    },
+    "services": {
+      "title": "서비스",
+      "dashboard": "실시간 대시보드",
+      "community": "커뮤니티",
+      "donation": "기부 시스템",
+      "hallOfFame": "명예의 전당"
+    },
+    "support": {
+      "title": "지원",
+      "help": "도움말",
+      "faq": "자주 묻는 질문",
+      "contact": "문의하기",
+      "bugReport": "버그 신고"
+    },
+    "legal": {
+      "title": "법적 고지",
+      "terms": "이용약관",
+      "privacy": "개인정보처리방침",
+      "disclaimer": "면책조항",
+      "cookies": "쿠키 정책"
+    },
+    "copyright": "© 2024 CoinNexus. 모든 권리 보유.",
+    "sitemap": "사이트맵",
+    "rss": "RSS",
+    "api": "API"
+  }
+}

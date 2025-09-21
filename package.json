@@ -1,0 +1,19 @@
+{
+  "name": "coinnexus",
+  "version": "1.0.0",
+  "description": "암호화폐 선물 거래 정보 및 커뮤니티 플랫폼",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": ["cryptocurrency", "trading", "community", "futures"],
+  "author": "CoinNexus Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

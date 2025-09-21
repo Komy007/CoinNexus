@@ -1,0 +1,197 @@
+{
+  "app": {
+    "title": "CoinNexus - Cryptocurrency Futures Trading Platform"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "community": "Community",
+    "donation": "Donation",
+    "profile": "Profile",
+    "createPost": "Write Post",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "The New Standard for<br />Cryptocurrency Futures Trading",
+    "description": "Where real-time data, expert insights, and an active community meet. Start smarter trading with CoinNexus.",
+    "cta": {
+      "primary": "Start Dashboard",
+      "secondary": "Explore Community"
+    },
+    "chart": {
+      "title": "Real-time Market Status",
+      "btc": "BTC/USDT",
+      "eth": "ETH/USDT"
+    }
+  },
+  "market": {
+    "title": "Real-time Market Overview",
+    "description": "Check the latest market data and insights",
+    "fearGreed": {
+      "title": "Fear & Greed Index"
+    },
+    "funding": {
+      "title": "Average Funding Rate",
+      "description": "Based on highest funding rate"
+    },
+    "volume": {
+      "title": "24h Trading Volume",
+      "description": "Highest volume coin"
+    },
+    "topCoins": {
+      "title": "Top Volume Coins"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard - CoinNexus",
+    "header": {
+      "title": "Real-time Dashboard",
+      "description": "Everything about cryptocurrency markets at a glance",
+      "lastUpdated": "Last updated:",
+      "refresh": "Refresh",
+      "export": "Export",
+      "settings": "Settings"
+    },
+    "metrics": {
+      "btc가격": "BTC Price",
+      "eth가격": "ETH Price",
+      "공포탐욕지수": "Fear & Greed Index",
+      "평균펀딩비": "Average Funding Rate",
+      "총미결제약정": "Total Open Interest",
+      "시장총가치": "Total Market Cap",
+      "error": "An error occurred while loading market data."
+    }
+  },
+  "community": {
+    "title": "Community - CoinNexus",
+    "header": {
+      "title": "Community",
+      "description": "A space where cryptocurrency traders share knowledge and experiences"
+    },
+    "category": {
+      "all": "All",
+      "analysis": "Analysis",
+      "strategy": "Strategy",
+      "news": "News",
+      "education": "Education",
+      "general": "General"
+    },
+    "createPost": "Write Post",
+    "readMore": "Read More",
+    "empty": {
+      "title": "No posts yet",
+      "description": "There are no posts yet. Write the first post!"
+    },
+    "error": {
+      "title": "An error occurred",
+      "description": "There was a problem loading posts. Please try again later."
+    }
+  },
+  "createPost": {
+    "title": "Write Post - CoinNexus",
+    "header": {
+      "title": "Write New Post",
+      "description": "Share your knowledge and experience"
+    },
+    "form": {
+      "title": "Title",
+      "category": "Category",
+      "content": "Content",
+      "tags": "Tags (max 5)"
+    }
+  },
+  "donation": {
+    "title": "Donation - CoinNexus",
+    "header": {
+      "title": "Donation",
+      "description": "Please donate for the continuous development and service improvement of the CoinNexus platform"
+    },
+    "stats": {
+      "total": "Total Donations",
+      "amount": "Total Amount",
+      "currencies": "Supported Currencies"
+    },
+    "address": {
+      "label": "Address"
+    },
+    "empty": "No donations yet"
+  },
+  "login": {
+    "title": "Login - CoinNexus",
+    "header": {
+      "title": "Login",
+      "description": "Welcome to CoinNexus"
+    },
+    "form": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "divider": "or",
+    "register": {
+      "text": "Don't have an account? ",
+      "link": "Register"
+    }
+  },
+  "register": {
+    "title": "Register - CoinNexus",
+    "header": {
+      "title": "Register",
+      "description": "Start with CoinNexus"
+    },
+    "form": {
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "divider": "or",
+    "login": {
+      "text": "Already have an account? ",
+      "link": "Login"
+    }
+  },
+  "auth": {
+    "loading": "Verifying authentication..."
+  },
+  "404": {
+    "title": "Page Not Found",
+    "description": "The page you requested may not exist or may have been moved.<br />Please check the URL or return to the homepage.",
+    "action": {
+      "home": "Go Home",
+      "dashboard": "Dashboard"
+    }
+  },
+  "footer": {
+    "about": {
+      "title": "About CoinNexus",
+      "description": "A specialized information and community platform for cryptocurrency futures trading. We aim to become a trusted insight hub by providing real-time data, educational content, and a space for mutual exchange."
+    },
+    "services": {
+      "title": "Services",
+      "dashboard": "Real-time Dashboard",
+      "community": "Community",
+      "donation": "Donation System",
+      "hallOfFame": "Hall of Fame"
+    },
+    "support": {
+      "title": "Support",
+      "help": "Help",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "bugReport": "Bug Report"
+    },
+    "legal": {
+      "title": "Legal",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "disclaimer": "Disclaimer",
+      "cookies": "Cookie Policy"
+    },
+    "copyright": "© 2024 CoinNexus. All rights reserved.",
+    "sitemap": "Sitemap",
+    "rss": "RSS",
+    "api": "API"
+  }
+}
