@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from './AuthContext';
+import { SOCKET_CONFIG } from '../config/api';
 import toast from 'react-hot-toast';
 
 const SocketContext = createContext();
@@ -12,10 +13,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     // Socket.IO 연결
-    const socketUrl = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
-    const newSocket = io(socketUrl, {
-      transports: ['websocket', 'polling']
-    });
+    const newSocket = io(SOCKET_CONFIG.url, SOCKET_CONFIG.options);
 
     // 연결 성공
     newSocket.on('connect', () => {

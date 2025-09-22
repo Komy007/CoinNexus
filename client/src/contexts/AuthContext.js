@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
+import { API_CONFIG } from '../config/api';
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
@@ -70,15 +71,9 @@ const authReducer = (state, action) => {
 };
 
 // API 설정
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // Axios 인스턴스 생성
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
+const api = axios.create(API_CONFIG);
 
 // 요청 인터셉터 - 토큰 자동 추가
 api.interceptors.request.use(
