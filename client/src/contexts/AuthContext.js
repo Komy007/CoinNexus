@@ -19,7 +19,7 @@ const AUTH_ACTIONS = {
 const initialState = {
   user: null,
   token: localStorage.getItem('token'),
-  isAuthenticated: false,
+  isAuthenticated: !!localStorage.getItem('token'), // 토큰이 있으면 인증된 것으로 간주
   loading: true
 };
 
@@ -123,8 +123,13 @@ export const AuthProvider = ({ children }) => {
             token
           }
         });
+      } else {
+        // 토큰이 유효하지 않은 경우
+        localStorage.removeItem('token');
+        dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE });
       }
     } catch (error) {
+      console.log('토큰 검증 실패:', error.message);
       localStorage.removeItem('token');
       dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE });
     }
@@ -170,9 +175,6 @@ export const AuthProvider = ({ children }) => {
         type: AUTH_ACTIONS.LOGIN_SUCCESS,
         payload: { user, token }
       });
-      
-      // 상태 업데이트 완료를 위한 약간의 지연
-      await new Promise(resolve => setTimeout(resolve, 50));
       
       toast.success('회원가입이 완료되었습니다!');
       return { success: true };

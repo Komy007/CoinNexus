@@ -263,11 +263,8 @@ function Register() {
     try {
       const result = await register(formData.email, formData.password, formData.username);
       if (result.success) {
-        // 회원가입 성공 후 잠시 대기하여 상태 업데이트 완료 보장
-        setTimeout(() => {
-          // 회원가입 후 커뮤니티로 직접 이동
-          navigate('/community', { replace: true });
-        }, 100);
+        // 회원가입 성공 후 즉시 커뮤니티로 이동
+        navigate('/community', { replace: true });
       } else {
         setError(result.message);
       }
