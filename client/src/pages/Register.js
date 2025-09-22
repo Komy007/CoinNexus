@@ -262,6 +262,7 @@ function Register() {
 
     try {
       const result = await register(formData.email, formData.password, formData.username);
+      
       if (result.success) {
         // 회원가입 성공 후 즉시 커뮤니티로 이동
         navigate('/community', { replace: true });
