@@ -84,11 +84,18 @@ const indexHtmlPath = path.join(buildPath, 'index.html');
 
 if (!fs.existsSync(buildPath) || !fs.existsSync(indexHtmlPath)) {
   console.error('❌ React 앱이 빌드되지 않았습니다!');
-  console.error('🔧 다음 명령어를 실행하세요:');
-  console.error('   cd server && npm install');
-  console.error('   cd ../client && npm install && npm run build');
-  console.error('   npm start');
-  process.exit(1);
+  console.error('🔧 빌드를 실행합니다...');
+  
+  try {
+    const { execSync } = require('child_process');
+    execSync('node ../build.js', { stdio: 'inherit', cwd: __dirname });
+    console.log('✅ 빌드 완료!');
+  } catch (error) {
+    console.error('❌ 빌드 실패:', error.message);
+    console.error('🔧 수동으로 다음 명령어를 실행하세요:');
+    console.error('   node build.js');
+    process.exit(1);
+  }
 }
 
 // 정적 파일 서빙 (React 앱)
