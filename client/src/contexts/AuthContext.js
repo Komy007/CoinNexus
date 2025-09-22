@@ -19,7 +19,7 @@ const AUTH_ACTIONS = {
 const initialState = {
   user: null,
   token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'), // 토큰이 있으면 인증된 것으로 간주
+  isAuthenticated: false, // 토큰 검증 후에만 true로 설정
   loading: true
 };
 
@@ -132,6 +132,9 @@ export const AuthProvider = ({ children }) => {
       console.log('토큰 검증 실패:', error.message);
       localStorage.removeItem('token');
       dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE });
+    } finally {
+      // 토큰 검증 완료 후 loading 상태 해제
+      dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
     }
   };
 
