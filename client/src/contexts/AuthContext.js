@@ -94,8 +94,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      console.log('🔒 401 오류 - 토큰 제거 및 로그인 상태 초기화');
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      // AuthContext의 상태를 직접 업데이트하지 않고, 컴포넌트에서 처리하도록 함
     }
     return Promise.reject(error);
   }
@@ -107,15 +108,24 @@ export const AuthProvider = ({ children }) => {
   // 토큰 검증
   const verifyToken = async () => {
     const token = localStorage.getItem('token');
+    console.log('🔍 토큰 검증 시작:', { hasToken: !!token, token: token?.substring(0, 20) + '...' });
+    
     if (!token) {
+      console.log('❌ 토큰 없음 - 로그인 실패');
       dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
       return;
     }
 
     try {
+      console.log('📡 토큰 검증 API 호출 중...');
       const response = await api.get('/auth/verify');
+      console.log('✅ 토큰 검증 성공:', response.data);
+      
       if (response.data.userId) {
+        console.log('👤 사용자 정보 조회 중...');
         const userResponse = await api.get('/auth/me');
+        console.log('✅ 사용자 정보 조회 성공:', userResponse.data);
+        
         dispatch({
           type: AUTH_ACTIONS.LOGIN_SUCCESS,
           payload: {
@@ -123,17 +133,18 @@ export const AuthProvider = ({ children }) => {
             token
           }
         });
+        console.log('🎉 로그인 상태 복원 완료');
       } else {
-        // 토큰이 유효하지 않은 경우
+        console.log('❌ 토큰이 유효하지 않음');
         localStorage.removeItem('token');
         dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE });
       }
     } catch (error) {
-      console.log('토큰 검증 실패:', error.message);
+      console.error('❌ 토큰 검증 실패:', error.message, error.response?.status);
       localStorage.removeItem('token');
       dispatch({ type: AUTH_ACTIONS.LOGIN_FAILURE });
     } finally {
-      // 토큰 검증 완료 후 loading 상태 해제
+      console.log('🏁 토큰 검증 완료 - loading 상태 해제');
       dispatch({ type: AUTH_ACTIONS.SET_LOADING, payload: false });
     }
   };
