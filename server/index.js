@@ -101,11 +101,6 @@ if (!fs.existsSync(buildPath) || !fs.existsSync(indexHtmlPath)) {
 // 정적 파일 서빙 (React 앱)
 app.use(express.static(buildPath));
 
-// 모든 라우트를 React 앱으로 리다이렉트 (SPA)
-app.get('*', (req, res) => {
-  res.sendFile(indexHtmlPath);
-});
-
 // Socket.IO 연결
 io.on('connection', (socket) => {
   console.log('사용자 연결됨:', socket.id);
@@ -113,6 +108,11 @@ io.on('connection', (socket) => {
   socket.on('join-room', (room) => {
     socket.join(room);
     console.log(`사용자 ${socket.id}가 ${room}에 참여했습니다.`);
+  });
+
+  socket.on('leave-room', (room) => {
+    socket.leave(room);
+    console.log(`사용자 ${socket.id}가 ${room}에서 나갔습니다.`);
   });
   
   socket.on('disconnect', () => {
@@ -138,14 +138,39 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 핸들링
-app.use('*', (req, res) => {
-  res.status(404).json({ message: '요청한 리소스를 찾을 수 없습니다.' });
+// SPA를 위한 모든 라우트 처리 (API가 아닌 경우에만)
+app.get('*', (req, res) => {
+  // API 요청은 404 처리
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ message: '요청한 API를 찾을 수 없습니다.' });
+  }
+  // React 앱 제공
+  res.sendFile(indexHtmlPath);
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 CoinNexus 서버가 포트 ${PORT}에서 실행 중입니다.`);
+  console.log(`🌐 환경: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📁 정적 파일 경로: ${buildPath}`);
+  console.log(`✅ 서버 준비 완료!`);
+});
+
+// 서버 종료 처리
+process.on('SIGTERM', () => {
+  console.log('🛑 서버 종료 신호 받음');
+  server.close(() => {
+    console.log('✅ 서버가 정상적으로 종료되었습니다');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('🛑 서버 인터럽트 신호 받음');
+  server.close(() => {
+    console.log('✅ 서버가 정상적으로 종료되었습니다');
+    process.exit(0);
+  });
 });
 
 module.exports = { app, io };
