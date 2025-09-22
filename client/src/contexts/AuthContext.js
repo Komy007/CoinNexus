@@ -162,11 +162,17 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/register', { email, password, username });
       const { token, user } = response.data;
       
+      // 토큰을 localStorage에 저장
       localStorage.setItem('token', token);
+      
+      // 상태 업데이트
       dispatch({
         type: AUTH_ACTIONS.LOGIN_SUCCESS,
         payload: { user, token }
       });
+      
+      // 상태 업데이트 완료를 위한 약간의 지연
+      await new Promise(resolve => setTimeout(resolve, 50));
       
       toast.success('회원가입이 완료되었습니다!');
       return { success: true };

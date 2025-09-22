@@ -222,7 +222,7 @@ function Register() {
   // 이미 로그인된 경우 리다이렉트
   React.useEffect(() => {
     if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
+      navigate('/community', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
@@ -263,7 +263,11 @@ function Register() {
     try {
       const result = await register(formData.email, formData.password, formData.username);
       if (result.success) {
-        navigate('/dashboard', { replace: true });
+        // 회원가입 성공 후 잠시 대기하여 상태 업데이트 완료 보장
+        setTimeout(() => {
+          // 회원가입 후 커뮤니티로 직접 이동
+          navigate('/community', { replace: true });
+        }, 100);
       } else {
         setError(result.message);
       }
