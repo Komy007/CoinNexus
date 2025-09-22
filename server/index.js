@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const fs = require('fs');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const { testConnection, syncDatabase } = require('./config/database');
@@ -77,12 +78,25 @@ app.use('/api/news', require('./routes/news'));
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/watchlist', require('./routes/watchlist'));
 
+// React 빌드 폴더 확인
+const buildPath = path.join(__dirname, '../client/build');
+const indexHtmlPath = path.join(buildPath, 'index.html');
+
+if (!fs.existsSync(buildPath) || !fs.existsSync(indexHtmlPath)) {
+  console.error('❌ React 앱이 빌드되지 않았습니다!');
+  console.error('🔧 다음 명령어를 실행하세요:');
+  console.error('   cd server && npm install');
+  console.error('   cd ../client && npm install && npm run build');
+  console.error('   npm start');
+  process.exit(1);
+}
+
 // 정적 파일 서빙 (React 앱)
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(buildPath));
 
 // 모든 라우트를 React 앱으로 리다이렉트 (SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  res.sendFile(indexHtmlPath);
 });
 
 // Socket.IO 연결
