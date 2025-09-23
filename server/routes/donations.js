@@ -188,7 +188,6 @@ router.post('/', auth, async (req, res) => {
 router.get('/wallet-addresses', (req, res) => {
   try {
     const addresses = {
-      BTC: process.env.BTC_WALLET_ADDRESS || '0x98e5a29bc4cacb2c54428790b9ac98208c7de2b3',
       ETH: process.env.ETH_WALLET_ADDRESS || '0x98e5a29bc4cacb2c54428790b9ac98208c7de2b3',
       USDT: process.env.USDT_WALLET_ADDRESS || 'THxudDuXfp5Q1gqxAiGj9EH1waQDRKjbcc'
     };

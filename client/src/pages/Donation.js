@@ -343,7 +343,6 @@ function Donation() {
 
   const getCurrencyIcon = (currency) => {
     switch (currency) {
-      case 'BTC': return 'fab fa-bitcoin';
       case 'ETH': return 'fab fa-ethereum';
       case 'USDT': return 'fas fa-dollar-sign';
       default: return 'fas fa-coins';
@@ -352,7 +351,6 @@ function Donation() {
 
   const getCurrencyColor = (currency) => {
     switch (currency) {
-      case 'BTC': return 'linear-gradient(135deg, #f7931a, #ffb347)';
       case 'ETH': return 'linear-gradient(135deg, #627eea, #4f46e5)';
       case 'USDT': return 'linear-gradient(135deg, #26a17b, #00d4aa)';
       default: return 'var(--gradient-primary)';
@@ -372,7 +370,6 @@ function Donation() {
   }
 
   const currencies = [
-    { key: 'BTC', name: 'Bitcoin', network: 'bitcoin' },
     { key: 'ETH', name: 'Ethereum', network: 'ethereum' },
     { key: 'USDT', name: 'Tether', network: 'tron' }
   ];
