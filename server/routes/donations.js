@@ -9,14 +9,14 @@ router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 20, currency } = req.query;
 
-    const query = { status: 'confirmed' };
+    const query = { isVerified: true };
     if (currency) {
       query.currency = currency;
     }
 
     const { rows: donations, count: total } = await Donation.findAndCountAll({
       where: query,
-      order: [['confirmedAt', 'DESC']],
+      order: [['verifiedAt', 'DESC']],
       limit: parseInt(limit),
       offset: (page - 1) * limit,
       include: [
@@ -45,24 +45,37 @@ router.get('/', async (req, res) => {
 // 기부 통계
 router.get('/stats', async (req, res) => {
   try {
-    const stats = await Donation.aggregate([
-      { $match: { status: 'confirmed' } },
-      {
-        $group: {
-          _id: '$currency',
-          totalAmount: { $sum: '$amount' },
-          count: { $sum: 1 }
-        }
-      }
-    ]);
+    const totalDonations = await Donation.count({ 
+      where: { isVerified: true } 
+    });
 
-    const totalDonations = await Donation.countDocuments({ status: 'confirmed' });
-    const totalAmount = stats.reduce((sum, stat) => sum + stat.totalAmount, 0);
+    const donations = await Donation.findAll({
+      where: { isVerified: true },
+      attributes: ['currency', 'amount']
+    });
+
+    // 통화별 통계 계산
+    const byCurrency = {};
+    let totalAmount = 0;
+
+    donations.forEach(donation => {
+      const currency = donation.currency;
+      if (!byCurrency[currency]) {
+        byCurrency[currency] = {
+          currency,
+          totalAmount: 0,
+          count: 0
+        };
+      }
+      byCurrency[currency].totalAmount += parseFloat(donation.amount);
+      byCurrency[currency].count += 1;
+      totalAmount += parseFloat(donation.amount);
+    });
 
     res.json({
       totalDonations,
       totalAmount,
-      byCurrency: stats
+      byCurrency: Object.values(byCurrency)
     });
   } catch (error) {
     console.error('기부 통계 조회 오류:', error);
@@ -75,39 +88,38 @@ router.get('/stats', async (req, res) => {
 // 명예의 전당 (기부자 순위)
 router.get('/hall-of-fame', async (req, res) => {
   try {
-    const topDonors = await Donation.aggregate([
-      { $match: { status: 'confirmed' } },
-      {
-        $group: {
-          _id: '$donor',
-          totalAmount: { $sum: '$amount' },
-          donationCount: { $sum: 1 },
-          lastDonation: { $max: '$confirmedAt' }
+    const donations = await Donation.findAll({
+      where: { isVerified: true },
+      include: [
+        {
+          model: User,
+          as: 'donor',
+          attributes: ['username', 'avatar']
         }
-      },
-      { $sort: { totalAmount: -1 } },
-      { $limit: 50 },
-      {
-        $lookup: {
-          from: 'users',
-          localField: '_id',
-          foreignField: '_id',
-          as: 'donorInfo'
-        }
-      },
-      { $unwind: '$donorInfo' },
-      {
-        $project: {
-          donor: {
-            username: '$donorInfo.username',
-            avatar: '$donorInfo.profile.avatar'
-          },
-          totalAmount: 1,
-          donationCount: 1,
-          lastDonation: 1
-        }
+      ],
+      order: [['verifiedAt', 'DESC']]
+    });
+
+    // 기부자별 통계 계산
+    const donorStats = {};
+    donations.forEach(donation => {
+      const donorId = donation.donorId;
+      if (!donorStats[donorId]) {
+        donorStats[donorId] = {
+          donor: donation.donor,
+          totalAmount: 0,
+          donationCount: 0,
+          lastDonation: donation.verifiedAt
+        };
       }
-    ]);
+      donorStats[donorId].totalAmount += parseFloat(donation.amount);
+      donorStats[donorId].donationCount += 1;
+    });
+
+    // 총 기부액 순으로 정렬하고 상위 50명 선택
+    const topDonors = Object.values(donorStats)
+      .sort((a, b) => b.totalAmount - a.totalAmount)
+      .slice(0, 50);
 
     res.json({ topDonors });
   } catch (error) {

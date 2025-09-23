@@ -12,6 +12,10 @@ const { createInitialData } = require('./models/sqlite');
 require('dotenv').config();
 
 const app = express();
+
+// Render 프록시 설정
+app.set('trust proxy', 1);
+
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
