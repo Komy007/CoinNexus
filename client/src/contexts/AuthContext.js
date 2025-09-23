@@ -19,7 +19,7 @@ const AUTH_ACTIONS = {
 const initialState = {
   user: null,
   token: localStorage.getItem('token'),
-  isAuthenticated: false, // 토큰 검증 후에만 true로 설정
+  isAuthenticated: !!localStorage.getItem('token'), // 토큰이 있으면 인증된 것으로 간주
   loading: true
 };
 
